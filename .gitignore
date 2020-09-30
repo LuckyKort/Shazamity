@@ -1,4 +1,4 @@
 config.xml
 venv/
 /.idea/inspectionProfiles/profiles_settings.xml
-/mydatabase.db
+/*.db
