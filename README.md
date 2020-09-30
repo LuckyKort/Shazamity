@@ -4,7 +4,7 @@ Project uses Audd.io API
 
 ```
 <keys>
-   <key name="tgapi_key">...</key>
+   <tgapi_key>...</key>
    <auddapi_key>...</auddapi_key>
 </keys>
 ```
