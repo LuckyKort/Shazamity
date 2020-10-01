@@ -205,31 +205,32 @@ def addTrackToFavorites(userid, trackid):
 		return e
 
 
-def getFavorites(userid):
+def getFavorites(userid: int or None) -> str or Exception:
 	try:
 		db = connectToDB()
 
 		getfavids = db['cursor'].execute("""SELECT track_id FROM users WHERE user_id='{0}'""".format(userid))
 		resultids = getfavids.fetchall()
 
-		if resultids:
-			favids = '0'
-			for i in resultids:
-				favids = favids + ', ' + str(i[0])
-
-			getfavnames = db['cursor'].execute("""SELECT name FROM tracks WHERE id in ({0})""".format(favids))
-			resultnames = getfavnames.fetchall()
-			favnames = []
-			for i in resultnames:
-				favnames.append(i[0])
-
-			resultstr = u"\U0001F4FB" + 'Твои избранные треки:\n'
-			for i in favnames:
-				resultstr = resultstr + i + '\n'
-
-			return resultstr
-		else:
+		if not resultids:
 			return "У тебя нет треков в избранном\nСамое время это исправить " + u"\U0001F609"
+		ids = []
+		for res in resultids:
+			ids.append(str(res[0]))
+		favids = ', '.join(ids)
+
+		getfavnames = db['cursor'].execute("""SELECT name FROM tracks WHERE id in ({0})""".format(favids))
+		resultnames = getfavnames.fetchall()
+		favnames = []
+		for i in resultnames:
+			favnames.append(i[0])
+
+		resultstr = u"\U0001F4FB" + 'Твои избранные треки:\n'
+		for i in favnames:
+			resultstr = resultstr + i + '\n'
+
+		return resultstr
+
 	except Exception as e:
 		return e
 
