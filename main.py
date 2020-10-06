@@ -15,6 +15,7 @@ auddkey = config[1].text
 bot = telebot.TeleBot(tgkey)
 logger = logging.getLogger()
 
+
 @bot.message_handler(func=lambda message: message.text == 'Моё избранное')
 def handle_text(message):
 	favorites = getFavorites(message.from_user.id)
